@@ -1,0 +1,36 @@
+
+{% for p in page.children_in_list %}
+  {% assign code_page = p %}
+{% endfor %}
+
+<div class="bg-gray-100 full-width">
+  <div class="px-5 py-4 mx-auto max-w-[1320px]">
+    {% render 'breadcrumb', breadcrumb: page.breadcrumb %}
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Block",
+    "description": "网页块",
+    "thumb_url": "images/theme/block.png",
+    "sub_page_templates": ["code"],
+    "settings": [
+      {
+        "id": "title",
+        "type": "text",
+        "placeholder": "",
+        "label": "标题",
+        "required": true,
+        "info": "显示在正文上方的文章标题"
+      },
+      {
+        "id": "tags",
+        "type": "tag_picker",
+        "multiple": true,
+        "label": "标签"
+      }
+    ]
+  }
+{% endschema%}

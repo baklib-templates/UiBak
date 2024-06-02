@@ -1,0 +1,80 @@
+{% assign pages = page.children_in_list | order_by: '-created_at' %}
+{% assign hot_tags = site.settings.hot_tags | split: ',' %}
+{% assign default_svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
+  <path d="M11.7 2.805a.75.75 0 0 1 .6 0A60.65 60.65 0 0 1 22.83 8.72a.75.75 0 0 1-.231 1.337 49.948 49.948 0 0 0-9.902 3.912l-.003.002c-.114.06-.227.119-.34.18a.75.75 0 0 1-.707 0A50.88 50.88 0 0 0 7.5 12.173v-.224c0-.131.067-.248.172-.311a54.615 54.615 0 0 1 4.653-2.52.75.75 0 0 0-.65-1.352 56.123 56.123 0 0 0-4.78 2.589 1.858 1.858 0 0 0-.859 1.228 49.803 49.803 0 0 0-4.634-1.527.75.75 0 0 1-.231-1.337A60.653 60.653 0 0 1 11.7 2.805Z" />
+  <path d="M13.06 15.473a48.45 48.45 0 0 1 7.666-3.282c.134 1.414.22 2.843.255 4.284a.75.75 0 0 1-.46.711 47.87 47.87 0 0 0-8.105 4.342.75.75 0 0 1-.832 0 47.87 47.87 0 0 0-8.104-4.342.75.75 0 0 1-.461-.71c.035-1.442.121-2.87.255-4.286.921.304 1.83.634 2.726.99v1.27a1.5 1.5 0 0 0-.14 2.508c-.09.38-.222.753-.397 1.11.452.213.901.434 1.346.66a6.727 6.727 0 0 0 .551-1.607 1.5 1.5 0 0 0 .14-2.67v-.645a48.549 48.549 0 0 1 3.44 1.667 2.25 2.25 0 0 0 2.12 0Z" />
+  <path d="M4.462 19.462c.42-.419.753-.89 1-1.395.453.214.902.435 1.347.662a6.742 6.742 0 0 1-1.286 1.794.75.75 0 0 1-1.06-1.06Z" />
+  </svg>
+  ' %}
+
+<main class="p-4 md:p-8 bg-slate-100">
+  <div class="mx-auto space-y-6">
+    <div class="max-w-screen-xl mx-auto space-y-6">
+      <div class="max-w-screen-md mx-auto">
+        <h2 class="text-2xl font-semibold text-center text-gray-800 lg:text-4xl">帮助中心</h2>
+        <p class="p-2 text-sm text-center text-gray-700">UIBak 是一个基于 TailwindCss 的网页样式组件库，拥有丰富的网页模板和 Web UI 组件，可以独立开发使用，也可以集成到 <a href="https://www.baklib.cn" target="_blank">Baklib</a> 低代码开发平台中。 </p>
+
+        {% form_tag 'search', class: 'relative flex-1' %}
+          <div class="flex justify-center space-x-3 md:mt-5 lg:py-3">
+          <div class="relative flex items-center justify-between space-x-4">
+            <input type="text" name="{{form.keywords_field_name}}" value="{{ search.keywords | escape_once }}" class="block w-full py-3 pl-12 text-sm placeholder-gray-400 transition-colors duration-300 border-teal-300 border-1 border-transparen peer focus:border-transparent ring-transparent focus:ring-transparent focus:ring-opacity-80">
+              <div class="absolute left-0 flex items-center justify-center w-8 h-8 p-1 text-gray-600 transition-all duration-300 bg-transparent rounded-full top-2 hover:bg-gray-100 peer-focus:text-teal-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+              </div>
+            </div>
+            <button type="submit" class="flex items-center px-4 py-3 space-x-2 text-sm font-semibold leading-4 transition-colors duration-300 bg-teal-600 rounded-md hover:bg-blue-700 text-teal-50">
+              <span>
+                搜索
+              </span>
+            </button>
+          </div>
+          {% endform_tag %}
+        <div class="flex flex-wrap items-center justify-center mt-4">
+          <span class="text-sm font-semibold text-center text-gray-700 md:text-left md:w-auto">
+            热门搜索:
+          </span>
+          {% for search_hot_key in hot_tags %}
+            <a
+              href="/-/search?q={{ search_hot_key }}"
+              class="px-3 py-1 text-xs font-semibold text-teal-600 bg-teal-100 rounded-lg">
+              {{ search_hot_key }}
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="grid flex-1 gap-6 mt-6 md:pt-8 md:grid-cols-2 xl:grid-cols-3">
+        {% paginate_tag pages, per: 24 %}
+          {% for page in pages %}
+            {% assign sub_page_count = page.pages_in_list | size %}
+            <a href="{{ page.path }}" class="flex flex-col items-start justify-between px-4 pt-6 pb-3 space-y-6 transition-all duration-300 bg-white rounded-md shadow-sm shadow-gray-200 hover:-translate-y-1 hover:shadow-md ">
+              <div class="flex items-center justify-center w-12 h-12 text-teal-600 bg-teal-100 rounded-md md:w-16 md:h-16">
+                {{ page.settings.svg_icon |  default: default_svg }}
+              </div>
+              <div class="flex-1">
+                <span class="text-base font-semibold text-gray-800">{{ page.link_text }}</span>
+                <span class="block mt-1 mb-2 text-sm text-gray-700">{{ sub_page_count }} 篇文章</span>
+                <span class="block mb-3 text-sm">{{ page.settings.description }}</span>
+              </div>
+            </a>
+          {% endfor %}
+            <!-- Pagination -->
+          {% render 'paginate', paginate: paginate %}
+        {% endpaginate_tag %}
+      </div>
+    </div>
+  </div>
+</main>
+
+{% schema %}
+  {
+    "name": "Support帮助中心",
+    "thumb_url": "images/theme/support.png",
+    "description": "帮助中心栏目的首页",
+    "sub_page_templates": ["support_section"],
+    "settings": [
+
+    ]
+  }
+{% endschema%}

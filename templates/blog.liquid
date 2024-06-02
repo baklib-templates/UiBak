@@ -1,0 +1,26 @@
+{% assign pages = page.children_in_list | order_by: '-created_at' %}
+
+<div class="px-4 md:px-8">
+  {% render 'breadcrumb', breadcrumb: page.breadcrumb, page: page %}
+</div>
+
+<main class="p-4 md:p-8 bg-slate-100">
+  <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3 ">
+    {% paginate_tag pages, per: 24 %}
+      {% for page in pages %}
+        {% render "page_card", page: page %}
+      {% endfor %}
+      <!-- Pagination -->
+      {% render 'paginate', paginate: paginate %}
+    {% endpaginate_tag %}
+  </div>
+</main>
+
+{% schema %}
+  {
+    "name": "Blog博客",
+    "description": "博客首页",
+    "thumb_url": "images/theme/blog.png",
+    "sub_page_templates": ["post"]
+  }
+{% endschema %}

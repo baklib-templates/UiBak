@@ -1,0 +1,48 @@
+{% assign pages = page.children_in_list %}
+{% assign default_thumb = 'images/page-thumb.jpeg' |  asset_url %}
+
+<main class="p-4 md:p-8 bg-slate-100">
+  <div class="mx-auto max-w-screen-3xl">
+    <h1 class="text-2xl font-bold text-gray-800 md:text-2xl md:leading-tight">{{ page.link_text }}</h1>
+    <p class="text-gray-500">{{ page.settings.description }}</p>
+    {% paginate_tag pages, per: 24 %}
+      <div class="grid grid-cols-1 gap-8 pt-8 md:grid-cols-2 xl:grid-cols-3 lg:gap-12">
+        {% for page in pages %}
+          <div class="bg-white rounded-lg shadow-md">
+            <a href="{{ page.path }}" class="group focus:outline-none">
+              <div class="relative">
+                <div class="absolute inset-0 flex items-center justify-center transition-opacity duration-300 bg-white bg-opacity-25 opacity-0 group-hover:opacity-100 ">
+                  <span class="px-2 py-2 text-xs font-semibold tracking-wider text-gray-600 uppercase duration-300 scale-50 bg-white rounded-lg shadow-lg group-hover:scale-100 ">View Detail</span>
+                </div>
+                <picture>
+                  <img
+                    src="{{ page.settings.thumb_image_url |  default: default_thumb }}"
+                    alt="{{ page.link_text }}" title="{{ page.settings.title }}"
+                    class="block object-cover object-top w-full overflow-hidden bg-gray-100 rounded-lg shadow-lg lazy group-focus:border-blue-600">
+                </picture>
+              </div>
+            </a>
+            <div class="flex justify-between px-4 my-4">
+              <div class="flex items-center space-x-1">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                </svg>
+                <span class="tracking-wider text-left text-gray-700">{{ page.settings.title }}</span>
+              </div>
+              {% for code_page in page.children_in_list %}
+                <a href="{{ code_page.path }}" target="_blank" type="button" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-center text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-gray-100 focus:ring focus:ring-gray-100 disabled:cursor-not-allowed disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-400">
+                  源代码
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+                  </svg>
+                </a>
+            {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <!-- Pagination -->
+      {% render 'paginate', paginate: paginate %}
+    {% endpaginate_tag %}
+  </div>
+</main>

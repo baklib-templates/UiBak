@@ -1,0 +1,16 @@
+<div class="px-4 md:px-8">
+  {% render 'breadcrumb', breadcrumb: page.breadcrumb, page: page %}
+</div>
+
+{% comment %} 本模板只做分类用，无内容 {% endcomment %}
+
+{% schema %}
+  {
+    "name": "collection集合分类",
+    "description": "只做分类用，下级是 collection_section",
+    "thumb_url": "images/theme/collection.png",
+    "sub_page_templates": ["collection_section"],
+    "settings": [
+    ]
+  }
+{% endschema%}

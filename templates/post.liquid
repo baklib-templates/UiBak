@@ -1,0 +1,152 @@
+{% assign recent_pages = site.pages_in_list | order_by: '-created_at' | limit: 15 %}
+{% assign post_thumb = 'images/thumbnail.png' |  asset_url %}
+
+
+
+<main class="md:p-0 bg-slate-100">
+  <div class="mx-auto max-w-screen-2xl">
+    <div class="w-full space-y-6 bg-white rounded-md shadow-md shadow-primary-200 ">
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-4">
+        <article class="col-span-3 px-3 space-y-4 lg:px-6 ProseMirror">
+          {% render 'breadcrumb', breadcrumb: page.breadcrumb, page: page %}
+
+          <h1 class="mt-4 text-3xl font-semibold text-gray-800 lg:mt-8 lg:text-4xl">{{ page.settings.title }}</h1>
+          <div class="flex flex-col items-start justify-start pb-2 my-2 space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+            <span class="flex items-center space-x-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+              <span class="block text-sm text-gray-600">{{ page.published_at | time_ago }}前</span>
+            </span>
+            <span class="flex items-center space-x-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"></path>
+              </svg>
+              <span class="block text-sm text-gray-600">{{ page.parent.link_text }}</span>
+            </span>
+            <span class="flex items-center space-x-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+              </svg>
+              <span class="block text-sm text-gray-600">{{ page.visits_count }} 访问量</span>
+            </span>
+          </div>
+
+          <img src="{{ page.settings.thumb_image_url |  default: post_thumb }}" alt="UIBak {{ page.link_text }}" class="object-scale-down w-full h-72">
+
+          <div class="">
+            <p class="p-4 my-4 font-light border-l-2 rounded-lg border-slate-400 text-slate-700 bg-slate-150 ">{{ page.settings.description | escape_once }}</p>
+            {{ page.settings.content }}
+          </div>
+          <!--/ post -->
+
+          <!--  tags  -->
+          <div class="pt-3 border-t border-gray-200">
+            <h3 class="text-base font-semibold text-gray-800">标签: </h3>
+            <div class="flex items-center mt-3 space-x-4">
+              {% if page.settings.tags.size > 0 %}
+                {% for tag in page.settings.tags %}
+                  <a
+                    href="{{ tag.path }}"
+                    class="relative inline-block duration-300 hover:scale-105"
+                  >
+                    {% render 'tag', tag: tag %}
+                  </a>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <!--/  tags  -->
+          <!-- leave comment -->
+          <div class="flex items-center col-span-1 pt-3 space-x-3">
+            <img src="{{ 'images/avatar.jpg' |  asset_url }}" class="w-12 h-12 rounded-full" alt="UIBak Avatar">
+            <div class="flex-1">
+              {% render "feedback_form", page: page %}
+            </div>
+          </div>
+          <!--/ leave comment -->
+        </article>
+        <aside class="col-span-1 p-3 space-y-6 lg:p-6 bg-slate-100">
+          <!-- author -->
+          <div class="flex flex-col col-span-1 px-6 py-8 space-y-4 bg-white border rounded-md">
+            <div class="flex flex-col items-center justify-center space-y-2">
+              {% assign avatar_url = 'images/icon.svg' | asset_url %}
+              <img src="{{ page.author.avatar_url | default: avatar_url }}" class="w-20 h-20 border-4 border-blue-600 rounded-full" alt="UIBak">
+              <div class="text-center">
+                <span class="text-sm font-semibold text-gray-800 transition-colors duration-300 hover:text-blue-600">
+                  {{ page.author.name }}
+                </span>
+                <span class="block text-xs font-semibold tracking-wider text-gray-600 uppercase">
+                  UIBak.com
+                </span>
+              </div>
+            </div>
+          </div>
+          <!--/ author -->
+          <div class="">
+            <div class="flex items-center justify-between ">
+              <h2 class="text-lg font-semibold text-gray-800">最近更新</h2>
+            </div>
+            <div class="pt-6 space-y-6">
+              {% for page in recent_pages %}
+                {% unless page.slug == 'code' %}
+                  <a href="{{ page.path }}" class="flex items-start col-span-1 space-x-4">
+                    <img src="{{ page.settings.thumb_image_url | default: post_thumb }}" class="w-16 h-16 rounded-md" alt="UIBak">
+                    <div>
+                      <span class="text-sm font-semibold text-gray-800 transition-colors duration-300 hover:text-blue-600">{{ page.settings.title  }}</span>
+                      <p class="block mb-1 text-sm text-gray-700">{{ page.settings.description | escape_once | truncate: 40 }}</p>
+                      <span class="text-sm font-semibold text-blue-600 hover:underline"> 阅读更多</span>
+                    </div>
+                  </a>
+                {% endunless %}
+              {% endfor %}
+            </div>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% schema %}
+  {
+    "name": "Post文章详情页面",
+    "description": "文章页面详情模板",
+    "sub_page_templates": [],
+    "thumb_url": "images/theme/post.png",
+    "settings": [
+      {
+        "id": "title",
+        "type": "text",
+        "placeholder": "",
+        "label": "标题",
+        "required": true,
+        "info": "显示在正文上方的文章标题"
+      },
+      {
+        "id": "description",
+        "type": "textarea",
+        "label": "摘要"
+      },
+      {
+        "id": "tags",
+        "type": "tag_picker",
+        "multiple": true,
+        "label": "标签"
+      },
+      {
+        "id": "thumb_image_url",
+        "type": "image_picker",
+        "ratio": "4:1",
+        "width": 640,
+        "label": "封面图"
+      },
+      {
+        "id": "content",
+        "type": "richtext",
+        "label": "页面内容"
+      }
+    ]
+  }
+{% endschema %}

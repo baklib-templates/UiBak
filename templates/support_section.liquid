@@ -1,0 +1,92 @@
+{% assign pages = page.children_in_list | order_by: '-created_at' %}
+{% assign hero_image_url = 'images/support-hero.png' |  asset_url %}
+
+<main class="p-4 md:p-8 bg-slate-100">
+  <!-- Hero -->
+
+    <div class="relative overflow-hidden rounded-md shadow-sm sm:h-32 md:h-48 lg:h-72">
+      <div class="relative h-full overflow-hidden shadow-sm shadow-gray-200 rounded-t-md">
+        <img src="{{ page.settings.hero_image_url |  default: hero_image_url }}" alt="image cover" class="object-cover w-screen">
+        <div class="absolute inset-0 w-full bg-gradient-to-t from-gray-700 bg-opacity-10">&nbsp;</div>
+      </div>
+      <div class="absolute z-20 flex flex-col items-start justify-start px-4 space-y-5 bottom-6 lg:px-8">
+        <h2 class="text-2xl font-semibold text-white lg:text-3xl">{{ page.link_text }}</h2>
+        <span class="block text-xs font-semibold tracking-wider uppercase transition-colors duration-300 text-gray-50 ">{{ page.settings.description }}</span>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto">
+      <nav class="flex items-center px-4 py-4 space-x-1 overflow-x-hidden text-sm font-semibold text-gray-700 lg:px-6">
+        <button class="flex items-center justify-center px-4 py-3 -ml-2 truncate rounded-full hover:bg-gray-100">标签: </button>
+        {% for tag in  page.settings.tags %}
+          <a href="{{ tag.path }}" class="flex items-center justify-center px-4 py-3 -ml-2 truncate rounded-full hover:bg-gray-100 hover:underline hover:text-primary">#{{ tag.name }}</a>
+        {% endfor %}
+      </nav>
+    </div>
+
+  <!-- list -->
+  <article class="w-full px-4 pt-6 pb-8 space-y-6 bg-white rounded-md shadow-sm shadow-gray-200 lg:pb-10 lg:pt-10 lg:px-6">
+
+    <div class="grid max-w-screen-xl grid-cols-1 gap-12 mx-auto md:grid-cols-2">
+      {% paginate_tag pages, per: 24 %}
+        {% for page in pages %}
+          <!-- item -->
+          <div class="flex items-start max-w-lg col-span-1 space-x-4">
+            <div class="flex items-center justify-center w-16 h-16 bg-teal-100 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 4v12l-4-2-4 2V4M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <a href="{{ page.path }}" class="mb-2 text-base font-semibold text-gray-800 transition-colors duration-300 hover:text-teal-600 hover:underline">{{ page.settings.title }}</a>
+              <p class="block mb-1 text-sm text-gray-700">{{ page.settings.description |  truncate: 60 }}</p>
+              <a href="{{ page.path }}" class="block mt-3 text-sm font-semibold text-teal-600 hover:underline"> 阅读更多</a>
+            </div>
+          </div>
+          <!--/ item-->
+        {% endfor %}
+        <!-- Pagination -->
+        {% render 'paginate', paginate: paginate %}
+      {% endpaginate_tag %}
+    </div>
+  </article>
+
+</main>
+
+{% schema %}
+  {
+    "name": "Support Section栏目",
+    "thumb_url": "images/theme/support_section.png",
+    "description": "帮助中心栏目的列表页",
+    "sub_page_templates": ["post"],
+    "settings": [
+      {
+        "id": "tags",
+        "type": "tag_picker",
+        "multiple": true,
+        "label": "标签"
+      },
+      {
+        "id": "description",
+        "type": "textarea",
+        "label": "内容描述"
+      },
+      {
+        "id": "hero_image_url",
+        "type": "image_picker",
+        "ratio": "19:6",
+        "width": 900,
+        "label": "首页背景大图",
+        "info": "用于部分主题首页的背景横幅，建议1900*600px的深色图片"
+      },
+      {
+        "id": "svg_icon",
+        "type": "html",
+        "label": "SVG 图标代码",
+        "info": "支持 Heroicons.com 上面的图标，正常添加 class='w-8 h-8' ",
+        "rows": 5,
+        "placeholder": "<svg ...></svg>"
+      }
+    ]
+  }
+{% endschema%}

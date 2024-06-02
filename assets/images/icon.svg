@@ -1,0 +1,17 @@
+<svg width="100" height="100" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+	<style type="text/css">
+      rect{fill:url(#MyGradient)}
+    </style>
+    <defs>
+      <linearGradient id="MyGradient">
+        <stop offset="5%" stop-color="#14b8a6" />
+        <stop offset="95%" stop-color="#ea580c" />
+      </linearGradient>
+    </defs>
+  <rect x="10" y="10" rx="10" ry="10" width="80" height="80" fill="#ffedd5" style="stroke;stroke-width:1;opacity:1">
+  </rect>
+  <text x="20" y="80" fill="#fff" font-size="72" font-weight="600" font-family="'Microsoft Yahei', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'">B</text>
+  <circle cx="0" cy="74" r="5" fill="#fff">
+    <animate attributeType="XML" attributeName="cx" values="72; 75; 72" dur="3s" repeatCount="indefinite" />
+  </circle>
+</svg>

@@ -1,0 +1,45 @@
+{% assign pages = page.children_in_list %}
+{% assign default_image = "images/hero.png" |  asset_url %}
+
+<main class="p-4 md:p-8 bg-slate-100">
+  <div class="relative overflow-hidden bg-white rounded-md shadow-sm shadow-gray-200 sm:h-32 md:h-48 lg:h-72">
+    <div class="relative h-full overflow-hidden shadow-sm shadow-gray-200 rounded-t-md">
+      <img src="{{ site.settings.hero_image_url |  default: default_image }}" alt="image cover" class="object-cover w-full ">
+      <div class="absolute inset-0 w-full bg-gradient-to-t from-gray-700 bg-opacity-10">&nbsp;</div>
+    </div>
+    <div class="absolute z-20 flex flex-col items-start justify-start px-4 space-y-5 bottom-6 lg:px-8">
+      <h1 class="text-3xl font-semibold text-white lg:text-5xl">{{ site.name }}</h1>
+      <h2 class="block text-lg font-normal transition-colors duration-300 lg:text-2xl text-gray-50">{{ site.settings.slogan }}</h2>
+      <span class="block text-sm font-normal transition-colors duration-300 text-gray-50">{{ site.settings.description }}</span>
+    </div>
+  </div>
+
+  <article class="flex-1 px-4 pt-6 pb-8 bg-white rounded-md shadow-sm shadow-gray-200 lg:pb-10 lg:pt-8 lg:px-6">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 lg:gap-y-12">
+      {% for page in pages %}
+        {% assign sub_pages = page.children_in_list %}
+        <div>
+          <h3 class="mb-4 text-base font-semibold text-gray-800">{{ page.link_text }}</h3>
+          <ul class="space-y-3 text-sm font-semibold text-blue-600">
+            {% for sub_page in sub_pages %}
+              <li>
+                <a href="{{ sub_page.path }}" class="hover:underline">{{ sub_page.link_text  }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    </div>
+  </article>
+
+  {% comment %} 未来内容多了再添加 footer {% render "footer" %} {% endcomment %}
+</main>
+
+{% schema %}
+  {
+    "name": "首页",
+    "description": "首页的默认风格",
+    "thumb_url": "images/theme/index2.png",
+    "sub_page_templates": ["collection","blog","support"]
+  }
+{% endschema %}

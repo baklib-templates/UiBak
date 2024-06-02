@@ -1,0 +1,62 @@
+{% for p in page.children_in_list %}
+  {% assign code_page = p %}
+{% endfor %}
+
+<div id="page-{{ page.id }}" x-data="{ tab: 'preview' }" class="mb-8 overflow-hidden rounded-t-lg shadow">
+  <div class="flex items-end justify-between text-gray-200 bg-gradient-to-br from-gray-700 to-gray-600">
+    <p class="p-4 font-semibold leading-none">
+      {{ page.link_text }}
+    </p>
+    <div class="flex items-center">
+      <div class="items-center hidden text-sm sm:flex md:text-base">
+        <button type="button" @click="tab = 'preview'"
+          :class="{'text-white bg-gray-600': tab === 'preview', 'hover:text-green-500 focus:text-green-500': tab !== 'preview'}"
+          class="px-5 py-3 font-semibold text-white focus:outline-none">
+          Preview
+        </button>
+        <button type="button" @click="tab = 'code'"
+          :class="{'text-white bg-gray-600': tab === 'code', 'hover:text-green-500 focus:text-green-500': tab !== 'code'}"
+          class="px-5 py-3 font-semibold text-white focus:outline-none">
+          Code
+        </button>
+        <textarea readonly class="whitespace-pre-wrap sr-only" aria-hidden x-ref="copyCode">
+{{ code_page.settings.content | escape }}
+        </textarea>
+      </div>
+      <button type="button"
+        @click="$refs.copyCode.select(); document.execCommand('copy'); $dispatch('notice', {type: 'success', text: 'Code successfully copied'}) "
+        class="px-5 py-3 font-semibold focus:outline-none hover:text-green-500 focus:text-green-500">
+        Copy
+      </button>
+      <a href="{{ code_page.path }}" target="_blank"
+        class="px-5 py-3 font-semibold focus:outline-none hover:text-green-500 focus:text-green-500">
+        Raw
+      </a>
+    </div>
+  </div>
+  <div class="relative bg-gray-100">
+    <div :class="{ 'block': tab === 'preview', 'hidden': tab !== 'preview' }" class="block">
+      <div x-data="resizeBlock()" @resize.window="setWidth($event.detail)" x-ref="root" :style="'max-width: 100%; width: ' + width" class="relative sm:min-w-preview-mobile sm:pr-2 no-touch">
+        <iframe x-ref="iframe" class="w-full" src="{{ code_page.path }}"></iframe>
+        <div :class="{ 'pointer-events-none': !resizing }" class="absolute inset-0 opacity-0 pointer-events-none"></div>
+        <div x-ref="handle" class="overflow-hidden sr-only sm:not-sr-only sm:bg-green-500 sm:absolute sm:right-0 sm:inset-y-0 sm:flex sm:items-center ">
+          <span class="block mt-2 ml-1 mr-1 font-semibold text-white transform rotate-90 pointer-events-none ">
+            &equals;
+          </span>
+        </div>
+      </div>
+    </div>
+    <div :class="{ 'block': tab === 'code', 'hidden': tab !== 'code' }" class="hidden">
+      {% comment %} TODO: 未实现语法高亮 {% endcomment %}
+      <div class="highlight">
+        <div class="chroma">
+          <pre class="overflow-scroll bg-white chroma">
+            <code>
+{{ code_page.settings.content | escape }}
+            </code>
+          </pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

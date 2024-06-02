@@ -1,0 +1,24 @@
+{% layout "simple" %}
+
+{% comment %} 只显示代码内容 {% endcomment %}
+<main class="p-4 bg-white md:p-10">
+  {{ page.settings.content }}
+</main>
+
+
+{% schema %}
+  {
+    "name": "code",
+    "description": "代码解释页，代码预览",
+    "sub_page_templates": [],
+    "thumb_url": "images/theme/code.png",
+    "settings": [
+      {
+        "id": "content",
+        "type": "html",
+        "label": "代码内容",
+        "rows": 40
+      }
+    ]
+  }
+{% endschema %}

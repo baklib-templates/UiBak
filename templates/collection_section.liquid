@@ -1,0 +1,32 @@
+<div class="px-4 md:px-8">
+  {% render 'breadcrumb', breadcrumb: page.breadcrumb, page: page %}
+</div>
+
+{% if page.settings.is_block == true %}
+  {% render "collection_blocks", page: page %}
+{% else %}
+  {% render "collection_pages", page: page %}
+{% endif %}
+
+{% schema %}
+  {
+    "name": "collection集合",
+    "description": " pages 或 blocks 模板集合",
+    "thumb_url": "images/theme/collection.png",
+    "sub_page_templates": ["page"],
+    "settings": [
+      {
+        "id": "description",
+        "type": "textarea",
+        "label": "模板库介绍"
+      },
+      {
+        "id": "is_block",
+        "type": "checkbox",
+        "label": "是 Block 组件集合（而非Page页面模板）",
+        "info": " 集合支持 Page 和 Block 两个类型模板(Block 没有预览图)",
+        "default": false
+      }
+    ]
+  }
+{% endschema%}
