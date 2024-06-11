@@ -7,62 +7,63 @@
   </svg>
   ' %}
 
-<main class="p-4 md:p-8 bg-slate-100">
-  <div class="mx-auto space-y-6">
-    <div class="max-w-screen-xl mx-auto space-y-6">
-      <div class="max-w-screen-md mx-auto">
-        <h2 class="text-2xl font-semibold text-center text-gray-800 lg:text-4xl">帮助中心</h2>
-        <p class="p-2 text-sm text-center text-gray-700">UIBak 是一个基于 TailwindCss 的网页样式组件库，拥有丰富的网页模板和 Web UI 组件，可以独立开发使用，也可以集成到 <a href="https://www.baklib.cn" target="_blank">Baklib</a> 低代码开发平台中。 </p>
+<section class="bg-slate-200 py-8 lg:py-12">
+  <div class="max-w-screen-md mx-auto">
+    <h2 class="text-2xl font-semibold p-4 text-center text-gray-800 lg:text-4xl">帮助中心</h2>
+    <p class="p-2 text-sm text-center text-gray-700">UIBak 是一个基于 TailwindCss 的网页样式组件库，拥有丰富的网页模板和 Web UI 组件，可以独立开发使用，也可以集成到 <a href="https://www.baklib.cn" target="_blank" class="text-primary"> Baklib </a> 低代码开发平台中。 </p>
 
-        {% form_tag 'search', class: 'relative flex-1' %}
-          <div class="flex justify-center space-x-3 md:mt-5 lg:py-3">
-          <div class="relative flex items-center justify-between space-x-4">
-            <input type="text" name="{{form.keywords_field_name}}" value="{{ search.keywords | escape_once }}" class="block w-full py-3 pl-12 text-sm placeholder-gray-400 transition-colors duration-300 border-teal-300 border-1 border-transparen peer focus:border-transparent ring-transparent focus:ring-transparent focus:ring-opacity-80">
-              <div class="absolute left-0 flex items-center justify-center w-8 h-8 p-1 text-gray-600 transition-all duration-300 bg-transparent rounded-full top-2 hover:bg-gray-100 peer-focus:text-teal-600">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
-              </div>
-            </div>
-            <button type="submit" class="flex items-center px-4 py-3 space-x-2 text-sm font-semibold leading-4 transition-colors duration-300 bg-teal-600 rounded-md hover:bg-blue-700 text-teal-50">
-              <span>
-                搜索
-              </span>
-            </button>
+    {% form_tag 'search', class: 'relative flex-1' %}
+      <div class="flex justify-center space-x-3 md:mt-5 lg:py-3">
+      <div class="relative flex items-center justify-between space-x-4">
+        <input type="text" name="{{form.keywords_field_name}}" value="{{ search.keywords | escape_once }}" class="block w-full py-3 pl-12 text-sm placeholder-gray-400 transition-colors duration-300 border-teal-300 border-1 border-transparen peer focus:border-transparent ring-transparent focus:ring-transparent focus:ring-opacity-80">
+          <div class="absolute left-0 flex items-center justify-center w-8 h-8 p-1 text-gray-600 transition-all duration-300 bg-transparent rounded-full top-2 hover:bg-gray-100 peer-focus:text-teal-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
           </div>
-          {% endform_tag %}
-        <div class="flex flex-wrap items-center justify-center mt-4">
-          <span class="text-sm font-semibold text-center text-gray-700 md:text-left md:w-auto">
-            热门搜索:
-          </span>
-          {% for search_hot_key in hot_tags %}
-            <a
-              href="/-/search?q={{ search_hot_key }}"
-              class="px-3 py-1 text-xs font-semibold text-teal-600 bg-teal-100 rounded-lg">
-              {{ search_hot_key }}
-            </a>
-          {% endfor %}
         </div>
+        <button type="submit" class="flex items-center px-4 py-3 space-x-2 text-sm font-semibold leading-4 transition-colors duration-300 bg-teal-600 rounded-md hover:bg-blue-700 text-teal-50">
+          <span>
+            搜索
+          </span>
+        </button>
       </div>
-      <div class="grid flex-1 gap-6 mt-6 md:pt-8 md:grid-cols-2 xl:grid-cols-3">
-        {% paginate_tag pages, per: 24 %}
-          {% for page in pages %}
-            {% assign sub_page_count = page.pages_in_list | size %}
-            <a href="{{ page.path }}" class="flex flex-col items-start justify-between px-4 pt-6 pb-3 space-y-6 transition-all duration-300 bg-white rounded-md shadow-sm shadow-gray-200 hover:-translate-y-1 hover:shadow-md ">
-              <div class="flex items-center justify-center w-12 h-12 text-teal-600 bg-teal-100 rounded-md md:w-16 md:h-16">
-                {{ page.settings.svg_icon |  default: default_svg }}
-              </div>
-              <div class="flex-1">
-                <span class="text-base font-semibold text-gray-800">{{ page.link_text }}</span>
-                <span class="block mt-1 mb-2 text-sm text-gray-700">{{ sub_page_count }} 篇文章</span>
-                <span class="block mb-3 text-sm">{{ page.settings.description }}</span>
-              </div>
-            </a>
-          {% endfor %}
-            <!-- Pagination -->
-          {% render 'paginate', paginate: paginate %}
-        {% endpaginate_tag %}
-      </div>
+      {% endform_tag %}
+    <div class="flex flex-wrap items-center justify-center mt-4">
+      <span class="text-sm font-semibold text-center text-gray-700 md:text-left md:w-auto">
+        热门搜索:
+      </span>
+      {% for search_hot_key in hot_tags %}
+        <a
+          href="/-/search?q={{ search_hot_key }}"
+          class="px-3 mr-2 py-1 text-xs font-semibold text-teal-600 bg-teal-100 rounded-md">
+          {{ search_hot_key }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<main class="p-4 md:p-12 bg-slate-100 min-h-screen">
+  <div class="max-w-screen-xl mx-auto space-y-6">
+    <div class="grid flex-1 gap-6  md:grid-cols-2 xl:grid-cols-3">
+      {% paginate_tag pages, per: 24 %}
+        {% for page in pages %}
+          {% assign sub_page_count = page.pages_in_list | size %}
+          <a href="{{ page.path }}" class="flex flex-col items-start justify-between px-4 pt-6 pb-3 space-y-6 transition-all duration-300 bg-white rounded-md shadow-sm shadow-gray-200 hover:-translate-y-1 hover:shadow-md ">
+            <div class="flex items-center justify-center w-12 h-12 text-teal-600 bg-teal-100 rounded-md md:w-16 md:h-16">
+              {{ page.settings.svg_icon |  default: default_svg }}
+            </div>
+            <div class="flex-1">
+              <span class="text-base font-semibold text-gray-800">{{ page.link_text }}</span>
+              <span class="block mt-1 mb-2 text-sm text-gray-700">{{ sub_page_count }} 篇文章</span>
+              <span class="block mb-3 text-sm">{{ page.settings.description }}</span>
+            </div>
+          </a>
+        {% endfor %}
+          <!-- Pagination -->
+        {% render 'paginate', paginate: paginate %}
+      {% endpaginate_tag %}
     </div>
   </div>
 </main>

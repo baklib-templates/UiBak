@@ -146,6 +146,21 @@
     "name": "页头页尾导航菜单",
     "settings": [
       {
+        "id": "post_ad",
+        "type": "html",
+        "label": "文章侧边栏广告图",
+        "rows": 10,
+        "default": "<div class='px-6'> <div class='rounded-lg p-1 border-2 hover:border-teal-600'> <a href=''><img src=''/></a> </div> </div>"
+      },
+      {
+        "id": "head_html",
+        "type": "html",
+        "label": "Head Meta HTML代码",
+        "info": "这部分内容会植入到站点的<head>标签内，请使用标准的 HTML 格式",
+        "placeholder": "<meta name='author' content='Baklib' />",
+        "rows": 10
+      },
+      {
         "id": "header_menu_html",
         "type": "html",
         "label": "Header页头导航菜单",
@@ -158,19 +173,6 @@
         "label": "Footer页尾导航菜单",
         "rows": 10,
         "placeholder": "<a href='#'> title </a>"
-      }
-    ]
-  },
-  {
-    "name": "Head HTML设置",
-    "settings": [
-      {
-        "id": "head_html",
-        "type": "html",
-        "label": "Head Meta HTML代码",
-        "info": "这部分内容会植入到站点的<head>标签内，请使用标准的 HTML 格式",
-        "placeholder": "<meta name='author' content='Baklib' />",
-        "rows": 10
       }
     ]
   }

@@ -32,11 +32,19 @@
             </span>
           </div>
 
-          <img src="{{ page.settings.thumb_image_url |  default: post_thumb }}" alt="UIBak {{ page.link_text }}" class="object-scale-down w-full h-72">
+          {% if page.settings.thumb_image_url %}
+            <img src="{{ page.settings.thumb_image_url |  default: post_thumb }}" alt="UIBak {{ page.link_text }}" class="object-scale-down w-full h-72">
+          {% endif %}
 
           <div class="">
             <p class="p-4 my-4 font-light border-l-2 rounded-lg border-slate-400 text-slate-700 bg-slate-150 ">{{ page.settings.description | escape_once }}</p>
-            {{ page.settings.content }}
+            <div class="mt-8 flow-root">
+              <div class="overflow-auto">
+                <div class="ProseMirror prose sm:prose-base lg:prose-xl focus:outline-none dark:prose-invert">
+                  {{ page.settings.content }}
+                </div>
+              </div>
+            </div>
           </div>
           <!--/ post -->
 
@@ -67,22 +75,9 @@
           <!--/ leave comment -->
         </article>
         <aside class="col-span-1 p-3 space-y-6 lg:p-6 bg-slate-100">
-          <!-- author -->
-          <div class="flex flex-col col-span-1 px-6 py-8 space-y-4 bg-white border rounded-md">
-            <div class="flex flex-col items-center justify-center space-y-2">
-              {% assign avatar_url = 'images/icon.svg' | asset_url %}
-              <img src="{{ page.author.avatar_url | default: avatar_url }}" class="w-20 h-20 border-4 border-blue-600 rounded-full" alt="UIBak">
-              <div class="text-center">
-                <span class="text-sm font-semibold text-gray-800 transition-colors duration-300 hover:text-blue-600">
-                  {{ page.author.name }}
-                </span>
-                <span class="block text-xs font-semibold tracking-wider text-gray-600 uppercase">
-                  UIBak.com
-                </span>
-              </div>
-            </div>
-          </div>
-          <!--/ author -->
+          <!-- ads -->
+          {{ site.settings.post_ad }}
+          <!--/ ads -->
           <div class="">
             <div class="flex items-center justify-between ">
               <h2 class="text-lg font-semibold text-gray-800">最近更新</h2>
