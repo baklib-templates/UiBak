@@ -25,9 +25,9 @@
       </span>
     </div>
     <div>
-      <h2 class="text-xl font-semibold text-gray-800"><a href="{{ page.path }}" class="text-primary hover:underline">{{ page.settings.title }}</a></h2>
-      <p class="mt-2 mb-4 text-gray-500">{{ page.settings.description | strip_html | truncate: 60 }}</p>
-      <a href="{{ page.path }}" class="inline-block text-sm font-semibold text-blue-600 hover:underline">阅读全文...</a>
+      <h2 class="text-xl font-semibold text-gray-800 line-clamp-2"><a href="{{ page.path }}" class="text-primary hover:underline">{{ page.settings.title }}</a></h2>
+      <p class="mt-2 mb-4 text-gray-500 line-clamp-2">{{ page.settings.description | strip_html | truncate: 60 }}</p>
+      <a href="{{ page.path }}" class="inline-block text-sm font-semibold text-blue-600 hover:underline">阅读全文</a>
     </div>
   </div>
 </div>

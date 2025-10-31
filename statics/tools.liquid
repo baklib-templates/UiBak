@@ -1,21 +1,39 @@
+{% assign sections = site.pages['/tools'].children_in_nav_menu %}
+{% assign default_icon = 'images/tools/default.png' | asset_url %}
 
-<div class=" bg-slate-200">
-  <div class=" mx-auto flex flex-col px-2 py-8 md:py-12 max-w-[1320px] gap-[40px] lg:flex-row lg:items-center lg:place-content-between">
+<div class="px-2 bg-slate-200">
+  <div class="mx-auto flex flex-col px-4 py-8 md:py-12 lg:flex-row lg:items-center lg:place-content-between">
     <div>
-      <h1 class="font-bold text-2xl leading-[26px] md:text-heading-4 lg:text-4xl mb-[23px]">
+      <h1 class="font-bold text-2xl leading-[26px] md:text-heading-4 lg:text-4xl mb-2">
         常用的 UIBak Web 代码开发工具库
       </h1>
       <p class="text-gray-400 text-text">
-      o Best thing for UIBak, Tailwind CSS, including components, plugins, cases, tutorials, tools.
+        UIBak 推荐的适应现代AI编程和 Tailwind CSS 的最佳选择，包括组件、插件、案例、教程和工具。
       </p>
     </div>
-
   </div>
 </div>
 
-<section class="py-12 bg-slate-100">
+<section class="py-6 px-2 bg-slate-100">
   <div class="px-4 mx-auto max-w-8xl">
     <div class="space-y-10 ">
+      {% for channel in sections %}
+        <div>
+          <h3 class="text-2xl font-bold" id="b1f0b866ff1e540503531b72d365a681">{{ channel.link_text }}</h3>
+          <div class="grid grid-cols-1 gap-6 mt-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+            {% for item in channel.children_in_nav_menu %}
+              <a class="p-6 overflow-hidden transition-all duration-300 bg-white border group rounded-2xl border-secondary shadow-md hover:-translate-y-1 hover:shadow-sm" href="{{ item.path }}" target="_blank" title="{{ item.link_text }}">
+                <div class="flex items-center gap-2">
+                  <div class="flex-none overflow-hidden border rounded-lg border-slate-200 bg-slate-100 p-1">
+                    <img class="w-8 h-8" src="{{ item.settings.thumb_image_url | default: default_icon }}" alt="{{ item.link_text }}" />
+                  </div>
+                  <h4 class="font-medium line-clamp-2 text-lg group-hover:text-primary-500">{{ item.link_text }}</h4>
+                </div><p class="mt-4 text-sm text-slate-400 line-clamp-2">{{ item.settings.description }}</p>
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
       <div>
         <h3 class="text-2xl font-bold" id="b1f0b866ff1e540503531b72d365a681">Development Tools</h3>
         <div class="grid grid-cols-1 gap-6 mt-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">

@@ -11,16 +11,16 @@
         </div>
       </div>
       <!-- filters by tag name -->
-      <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3 ">
-        {% paginate_tag tag.pages, as: 'pages' %}
+      {% paginate_tag tag.pages, as: 'pages' %}
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
           {% for page in pages %}
             {% render 'page_card', page: page %}
           {% else %}
             内容为空
           {% endfor %}
-          {% render 'paginate', paginate: paginate %}
-        {% endpaginate_tag %}
-      </div>
+        </div>
+        {% render 'paginate', paginate: paginate %}
+      {% endpaginate_tag %}
     </div>
 
     <!-- Sidebar Section -->

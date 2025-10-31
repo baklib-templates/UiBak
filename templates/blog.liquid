@@ -5,15 +5,19 @@
 </div>
 
 <main class="p-4 md:p-8 bg-slate-100">
-  <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3 ">
-    {% paginate_tag pages, per: 24 %}
+  
+  {% paginate_tag pages, per: 24 %}
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3 ">
       {% for page in pages %}
         {% render "page_card", page: page %}
       {% endfor %}
+    </div>
+    <div class="mt-6">
       <!-- Pagination -->
       {% render 'paginate', paginate: paginate %}
-    {% endpaginate_tag %}
-  </div>
+    </div>
+  {% endpaginate_tag %}
+  
 </main>
 
 {% schema %}

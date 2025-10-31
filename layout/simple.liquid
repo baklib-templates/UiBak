@@ -9,7 +9,10 @@
     <!-- Tailwind -->
     {{ 'css/main.css' | asset_url | stylesheet_tag: data-turbo-track: 'reload' }}
     {%# TIPS：在低代码平台开发时，请打开下一行代码注释 %}
-    {% if false %} {{ 'javascripts/cdn.tailwindcss.js' | asset_url | script_tag: data-turbo-track: 'reload' }} {% endif %}
+    {% if true %} 
+      {{ 'javascripts/cdn.tailwindcss.js' | asset_url | script_tag: data-turbo-track: 'reload' }} 
+      <script src="//unpkg.com/alpinejs" defer></script>
+    {% endif %}
     {{ site.settings.head_html }}
   </head>
   <body class="">

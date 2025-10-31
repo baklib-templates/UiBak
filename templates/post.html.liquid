@@ -1,0 +1,53 @@
+{% assign recent_pages = site.pages_in_list | order_by: '-created_at' | limit: 15 %}
+{% assign post_thumb = 'images/thumbnail.png' |  asset_url %}
+
+{{ page.settings.html_content }}
+
+{% schema %}
+  {
+    "name": "Post HTML页面",
+    "description": "HTML填充文章详情页面",
+    "sub_page_templates": [],
+    "thumb_url": "images/theme/post.png",
+    "settings": [
+      {
+        "id": "title",
+        "type": "text",
+        "placeholder": "",
+        "label": "标题",
+        "required": true,
+        "info": "显示在正文上方的文章标题"
+      },
+      {
+        "id": "description",
+        "type": "textarea",
+        "label": "摘要"
+      },
+      {
+        "id": "tags",
+        "type": "tag_picker",
+        "multiple": true,
+        "label": "标签"
+      },
+      {
+        "id": "thumb_image_url",
+        "type": "image_picker",
+        "ratio": "4:2",
+        "width": 240,
+        "label": "封面图",
+        "info": "如果是 Tools工具栏文章，则建议尺寸为 240x240 像素图标"
+      },
+      {
+        "id": "content",
+        "type": "richtext",
+        "label": "页面内容"
+      },
+      {
+        "id": "html_content",
+        "type": "html",
+        "label": "代码内容",
+        "rows": 40
+      }
+    ]
+  }
+{% endschema %}

@@ -3,10 +3,10 @@
 
 <main class="p-4 md:p-8 bg-slate-100">
   <!-- Hero -->
-
     <div class="relative overflow-hidden rounded-md shadow-sm sm:h-32 md:h-48 lg:h-72">
+      {% render 'breadcrumb', breadcrumb: page.breadcrumb, page: page %}
       <div class="relative h-full overflow-hidden shadow-sm shadow-gray-200 rounded-t-md">
-        <img src="{{ page.settings.hero_image_url |  default: hero_image_url }}" alt="image cover" class="object-cover w-screen">
+        <img src="{{ page.settings.hero_image_url |  default: hero_image_url }}" alt="image cover" class="object-cover content-center w-screen">
         <div class="absolute inset-0 w-full bg-gradient-to-t from-gray-700 bg-opacity-10">&nbsp;</div>
       </div>
       <div class="absolute z-20 flex flex-col items-start justify-start px-4 space-y-5 bottom-6 lg:px-8">
@@ -26,7 +26,6 @@
 
   <!-- list -->
   <article class="w-full px-4 pt-6 pb-8 space-y-6 bg-white rounded-md shadow-sm shadow-gray-200 lg:pb-10 lg:pt-10 lg:px-6">
-
     <div class="grid max-w-screen-xl grid-cols-1 gap-12 mx-auto md:grid-cols-2">
       {% paginate_tag pages, per: 24 %}
         {% for page in pages %}
